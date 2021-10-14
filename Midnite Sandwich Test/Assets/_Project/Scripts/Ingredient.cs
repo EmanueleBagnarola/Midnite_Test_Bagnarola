@@ -34,9 +34,24 @@ public class Ingredient : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    public Vector3 GetStartingPosition
+    {
+        get
+        {
+            return _startingPosition;
+        }
+    }
+
     [SerializeField]
     private IngredientID _ingredientID;
-  
+
+    private Vector3 _startingPosition = Vector3.zero;
+
+    private void Start()
+    {
+        _startingPosition = transform.position;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("Touch Ingredient: " + gameObject.name);

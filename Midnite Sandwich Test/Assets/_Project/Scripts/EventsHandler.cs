@@ -10,6 +10,8 @@ public class EventsHandler : MonoBehaviour
     [HideInInspector] public Events.EventIngredientTouch OnIngredientTouch = null;
     [HideInInspector] public Events.EventIngredientMovement OnIngredientMovement = null;
     [HideInInspector] public Events.EventMoveSuccess OnMoveSuccess = null;
+    [HideInInspector] public Events.EventLevelCompleted OnLevelCompleted = null;
+    [HideInInspector] public Events.RandomGenerationEnded OnRandomGenerationEnded = null;
 
     private void Awake()
     {
@@ -27,4 +29,6 @@ public class Events
     [System.Serializable] public class EventIngredientTouch : UnityEvent<Ingredient> { };
     [System.Serializable] public class EventIngredientMovement : UnityEvent<Ingredient, Vector2> { }
     [System.Serializable] public class EventMoveSuccess : UnityEvent { }
+    [System.Serializable] public class EventLevelCompleted : UnityEvent { }
+    [System.Serializable] public class RandomGenerationEnded : UnityEvent { }
 }

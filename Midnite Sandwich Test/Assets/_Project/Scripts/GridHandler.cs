@@ -25,6 +25,7 @@ public class GridHandler : MonoBehaviour
     private void Start()
     {
         EventsHandler.Instance.OnIngredientMovement?.AddListener(OnIngredientMovement);
+        EventsHandler.Instance.OnRandomGenerationEnded?.AddListener(OnRandomGenerationEnded);
     }
 
     private void Awake()
@@ -232,6 +233,35 @@ public class GridHandler : MonoBehaviour
         }
 
         EventsHandler.Instance.OnMoveSuccess?.Invoke();
+    }
+
+    private void OnRandomGenerationEnded()
+    {
+        Debug.Log("ON RANDOM GENERATION ENDED");
+        for (int i = 0; i < _ingredientsOnGrid.Count; i++)
+        {
+            Ingredient ingredient = _ingredientsOnGrid[i];
+            _startingGrid.Add(ingredient);
+        }
+    }
+
+    public void ResetIngredientsPositions()
+    {
+        _ingredientsOnGrid.Clear();
+
+        for (int i = 0; i < _startingGrid.Count; i++)
+        {
+            Ingredient ingredient = _startingGrid[i];
+            _ingredientsOnGrid.Add(ingredient);
+        }
+
+        for (int i = 0; i < _ingredientsOnGrid.Count; i++)
+        {
+            Ingredient ingredient = _ingredientsOnGrid[i];
+            ingredient.transform.position = ingredient.GetStartingPosition;
+        }
+
+        _stacksOnGrid.Clear();
     }
 
     public bool CheckWinCondition()

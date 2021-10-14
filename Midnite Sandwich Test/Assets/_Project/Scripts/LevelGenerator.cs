@@ -51,7 +51,6 @@ public class LevelGenerator : MonoBehaviour
        StartCoroutine(GenerateRandomLevel());  
     }
 
-
     #region Random Generation
     private IEnumerator GenerateRandomLevel()
     {
@@ -86,6 +85,8 @@ public class LevelGenerator : MonoBehaviour
             GameObject newIngredient = Instantiate(ingredient, new Vector3(randomNearPosition.x, 0, randomNearPosition.y), Quaternion.identity);
             GridHandler.Instance.AddIngredientToGrid(newIngredient.GetComponent<Ingredient>());
         }
+
+        EventsHandler.Instance.OnRandomGenerationEnded?.Invoke();
     }
 
     private GameObject GetRandomIngredientInContainer()
