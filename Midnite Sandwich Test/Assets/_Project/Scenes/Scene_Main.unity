@@ -1478,6 +1478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameMode: 2
+  _gameSettings: {fileID: 11400000, guid: 3eb96fd3b273cd645a6db13648881f18, type: 2}
 --- !u!1 &1832414527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,11 +1509,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ingredientsContainer: {fileID: 11400000, guid: 63364347a37cf054cb333c481811ecbe, type: 2}
-  _foodLevelTemplate: {fileID: 11400000, guid: ff7526dc6f167b64eae3c2b1016b705c, type: 2}
+  _foodLevelTemplates:
+  - {fileID: 11400000, guid: ff7526dc6f167b64eae3c2b1016b705c, type: 2}
+  - {fileID: 11400000, guid: 8b051e5214b4d944b9bcffa1f7089e42, type: 2}
+  - {fileID: 11400000, guid: 70c6d6f463abb1045aaed35a12419066, type: 2}
+  - {fileID: 11400000, guid: 577578b13cd426a4a944b9fc8e106db5, type: 2}
   _additionalPiecesToGenerate: 7
   _numberData: {fileID: 11400000, guid: 559d8f059a68e434eb7d58aa02008018, type: 2}
-  _numbersLevelTemplate: {fileID: 11400000, guid: 1fe03700d20260943a992dba818c3e4b, type: 2}
-  _gridSize: 4
+  _numbersLevelTemplates:
+  - {fileID: 11400000, guid: 59efc3ffdc32790479e426a3b8131d8c, type: 2}
+  - {fileID: 11400000, guid: b2be34671096d7543ac4eecd8a74a825, type: 2}
+  - {fileID: 11400000, guid: fd8190e89d996824482e509837ce160f, type: 2}
 --- !u!4 &1832414529
 Transform:
   m_ObjectHideFlags: 0

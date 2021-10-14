@@ -34,4 +34,9 @@ public class Ingredient : Tile, IPointerDownHandler
         Debug.Log("Touch Ingredient: " + _ingredientID.ToString());
         EventsHandler.Instance.OnTileTouch?.Invoke(this);
     }
+
+    public void MoveIngredient(Vector3 movePosition)
+    {
+        transform.position = movePosition;
+    }
 }

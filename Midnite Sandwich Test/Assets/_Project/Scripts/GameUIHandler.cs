@@ -25,7 +25,10 @@ public class GameUIHandler : MonoBehaviour
 
     private void Start()
     {
+        _restartLevelButton.transform.parent.gameObject.SetActive(false);
+
         EventsHandler.Instance.OnLevelCompleted?.AddListener(() => _victoryPanel.SetActive(true));
+        EventsHandler.Instance.OnLevelGenerationEnded.AddListener(() => _restartLevelButton.transform.parent.gameObject.SetActive(true));
 
         _victoryPanel.SetActive(false);
 

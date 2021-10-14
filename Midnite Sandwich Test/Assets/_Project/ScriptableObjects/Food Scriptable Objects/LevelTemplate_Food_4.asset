@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: beec9eb0c96f7f348b1dca6acc21e404, type: 3}
-  m_Name: LevelTemplate_Numbers
+  m_Name: LevelTemplate_Food_4
   m_EditorClassIdentifier: 
   data:
     Rows:
     - Row:
+      - 0
       - 
-      - 2
-      - 2
-      - 4
+      - 
+      - 
+    - Row:
+      - 0
+      - r
+      - 
+      - 
     - Row:
       - 
+      - r
       - 
       - 
-      - 8
     - Row:
+      - r
+      - r
       - 
       - 
-      - 
-      - 16
-    - Row:
-      - 
-      - 
-      - 
-      - 32

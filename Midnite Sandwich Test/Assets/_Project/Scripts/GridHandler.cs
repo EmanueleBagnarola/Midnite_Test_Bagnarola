@@ -83,7 +83,6 @@ public class GridHandler : MonoBehaviour
     }
 
     #region Food Handlers
-
     private void HandleIngredientMovement(Tile tile, Vector2 coords)
     {
         // Single Ingredient move
@@ -103,7 +102,9 @@ public class GridHandler : MonoBehaviour
                 destinationStack.IngredientsInStack.Add((Ingredient)tile);
 
                 // Move the moving ingredient on the top of the stack
-                tile.transform.position = new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y);
+                //tile.transform.position = new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y);
+                Ingredient movingIngredient = tile as Ingredient;
+                movingIngredient.MoveIngredient(new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y));
 
                 // Remove the ingredient from the ingredient list of the grid
                 RemoveTileFromGrid(tile);
@@ -121,7 +122,9 @@ public class GridHandler : MonoBehaviour
             stack.AddIngredient((Ingredient)tile);
 
             // Move the ingredient
-            tile.transform.position = new Vector3(coords.x, GetTileAtDestination(coords).transform.position.y + 0.1f, coords.y);
+            //tile.transform.position = new Vector3(coords.x, GetTileAtDestination(coords).transform.position.y + 0.1f, coords.y);
+            Ingredient ingredient = tile as Ingredient;
+            ingredient.MoveIngredient(new Vector3(coords.x, GetTileAtDestination(coords).transform.position.y + 0.1f, coords.y));
 
             // Remove both ingredient from the single ingredients list on the grid
             RemoveTileFromGrid(ingredientOnGrid);
@@ -155,7 +158,8 @@ public class GridHandler : MonoBehaviour
                     for (int x = stack.IngredientsInStack.Count - 1; x >= 0; x--)
                     {
                         Ingredient ingredientInStack = stack.IngredientsInStack[x];
-                        ingredientInStack.transform.position = new Vector3(coords.x, 0.1f * (stack.IngredientsInStack.Count - x), coords.y);
+                        //ingredientInStack.transform.position = new Vector3(coords.x, 0.1f * (stack.IngredientsInStack.Count - x), coords.y);
+                        ingredientInStack.MoveIngredient(new Vector3(coords.x, 0.1f * (stack.IngredientsInStack.Count - x), coords.y));
 
                         // Add each ingredient in the new stack with new list order
                         newStack.Add(ingredientInStack);
@@ -185,7 +189,8 @@ public class GridHandler : MonoBehaviour
                         destinationStack.AddIngredient(topIngredient);
 
                         // Move the top ingredient of the moving stack
-                        topIngredient.transform.position = new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y);
+                        //topIngredient.transform.position = new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y);
+                        topIngredient.MoveIngredient(new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y));
                     }
 
                     // Remove the moving stack from the current stacks list
@@ -323,11 +328,6 @@ public class GridHandler : MonoBehaviour
         }
 
         return false;
-    }
-
-    private void CheckFoodModeWinCondition()
-    {
-
     }
 
     public bool IsInGridRange(Vector2 positionToCheck)

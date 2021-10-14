@@ -22,10 +22,19 @@ public class GameHandler : MonoBehaviour
         }
     }
 
+    public GameSettings GetGameSettings
+    {
+        get
+        {
+            return _gameSettings;
+        }
+    }
+
     [SerializeField]
     private GameMode _gameMode = GameMode.food_random;
 
-    private bool _canRestartLevel = false;
+    [SerializeField]
+    private GameSettings _gameSettings = null;
 
     private void Awake()
     {
@@ -42,14 +51,10 @@ public class GameHandler : MonoBehaviour
         InitLog();
 
         EventsHandler.Instance.OnMoveSuccess?.AddListener(OnMoveSuccess);
-        EventsHandler.Instance.OnLevelGenerationEnded?.AddListener(() => _canRestartLevel = true);
     }
 
     public void RestartLevel()
     {
-        if (!_canRestartLevel)
-            return;
-
         GridHandler.Instance.ResetTilePositions();
     }
 

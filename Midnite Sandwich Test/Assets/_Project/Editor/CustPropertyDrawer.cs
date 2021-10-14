@@ -5,20 +5,28 @@ using System.Collections;
 [CustomPropertyDrawer(typeof(ArrayLayout))]
 public class CustPropertyDrawer : PropertyDrawer {
 
-	public override void OnGUI(Rect position,SerializedProperty property,GUIContent label){
+	public override void OnGUI(Rect position,SerializedProperty property,GUIContent label)
+	{
 		EditorGUI.PrefixLabel(position,label);
 		Rect newposition = position;
 		newposition.y += 18f;
 		SerializedProperty data = property.FindPropertyRelative("Rows");
 		//data.rows[0][]
-		for(int j=0;j<4;j++){
+		for(int j = 0; j < 4; j++)
+		{
 			SerializedProperty row = data.GetArrayElementAtIndex(j).FindPropertyRelative("Row");
+
 			newposition.height = 18f;
+
 			if(row.arraySize != 4)
+            {
 				row.arraySize = 4;
+            }
+
 			newposition.width = /*position.width/5.5f*/50f;
-			//newposition.width = Mathf.Clamp(newposition.width, 50f, 50f);
-			for(int i=0;i<4;i++){
+
+			for(int i = 0; i < 4; i++)
+			{
 				EditorGUI.PropertyField(newposition,row.GetArrayElementAtIndex(i),GUIContent.none);
 				newposition.x += newposition.width;
 			}
