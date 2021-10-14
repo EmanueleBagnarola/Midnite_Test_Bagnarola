@@ -36,6 +36,7 @@ public class GridHandler : MonoBehaviour
             Destroy(gameObject);
     }
 
+    #region Food Handlers
     public void AddIngredientToGrid(Ingredient ingredient)
     {
         _ingredientsOnGrid.Add(ingredient);
@@ -276,6 +277,10 @@ public class GridHandler : MonoBehaviour
 
         return false;
     }
+    #endregion
+
+    #region Number Handlers
+    #endregion
 
     public bool IsInGridRange(Vector2 positionToCheck)
     {
@@ -303,10 +308,5 @@ public class IngredientStack
     {
         IngredientsInStack.Clear();
         IngredientsInStack = newStackList;
-    }
-
-    public void MoveStack(Vector2 newCoords)
-    {
-        Coords = newCoords;
     }
 }
