@@ -24,13 +24,18 @@ public class SwipeController : MonoBehaviour
     private Tile _lastTouchedTile = null;
 
     private bool _detectSwipe = true;
+    private bool _waitGeneration = true;
 
     private void Start()
     {
+        _waitGeneration = true;
+
         EventsHandler.Instance.OnTileTouch?.AddListener((tile) =>
         {
             _lastTouchedTile = tile;
         });
+
+        EventsHandler.Instance.OnLevelGenerationEnded?.AddListener(() => _waitGeneration = false); 
     }
 
     private void Update()
@@ -40,6 +45,9 @@ public class SwipeController : MonoBehaviour
 
     private void CheckTouch()
     {
+        if (_waitGeneration)
+            return;
+
         if (Input.touchCount == 0)
             _detectSwipe = true;
 

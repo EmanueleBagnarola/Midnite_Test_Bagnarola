@@ -50,7 +50,10 @@ public class GameHandler : MonoBehaviour
     {
         InitLog();
 
+        Screen.orientation = ScreenOrientation.Portrait;
+
         EventsHandler.Instance.OnMoveSuccess?.AddListener(OnMoveSuccess);
+
     }
 
     public void RestartLevel()
