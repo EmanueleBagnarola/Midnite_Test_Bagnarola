@@ -16,14 +16,15 @@ public class CustPropertyDrawer : PropertyDrawer {
 			newposition.height = 18f;
 			if(row.arraySize != 4)
 				row.arraySize = 4;
-			newposition.width = position.width/20;
+			newposition.width = /*position.width/5.5f*/50f;
+			//newposition.width = Mathf.Clamp(newposition.width, 50f, 50f);
 			for(int i=0;i<4;i++){
 				EditorGUI.PropertyField(newposition,row.GetArrayElementAtIndex(i),GUIContent.none);
 				newposition.x += newposition.width;
 			}
 
 			newposition.x = position.x;
-			newposition.y += 18f;
+			newposition.y += 25f;
 		}
 	}
 
