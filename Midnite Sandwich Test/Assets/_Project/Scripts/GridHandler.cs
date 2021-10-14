@@ -19,6 +19,9 @@ public class GridHandler : MonoBehaviour
     [SerializeField]
     private List<IngredientStack> _stacksOnGrid = new List<IngredientStack>();
 
+    [SerializeField]
+    private List<Ingredient> _startingGrid = new List<Ingredient>();
+
     private void Start()
     {
         EventsHandler.Instance.OnIngredientMovement?.AddListener(OnIngredientMovement);
@@ -30,6 +33,17 @@ public class GridHandler : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    public void AddIngredientToGrid(Ingredient ingredient)
+    {
+        _ingredientsOnGrid.Add(ingredient);
+    }
+
+    public Ingredient GetRandomIngredientOnGrid()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, _ingredientsOnGrid.Count - 1);
+        return _ingredientsOnGrid[randomIndex];
     }
 
     public Ingredient GetIngredientAtDestination(Vector2 coords)
