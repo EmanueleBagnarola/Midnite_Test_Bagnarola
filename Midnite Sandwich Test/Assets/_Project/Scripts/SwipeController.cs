@@ -168,6 +168,13 @@ public class SwipeController : MonoBehaviour
         if (GridHandler.Instance.IsDestinationOccupied(swipeDestination) && GridHandler.Instance.IsInGridRange(swipeDestination))
             success = true;
 
+        // Check Diagonal move
+        if(swipeDestination.x != _lastTouchedTile.GetCoords.x && swipeDestination.y != _lastTouchedTile.GetCoords.y)
+        {
+            Debug.LogWarning("DIAGONAL MOVE IS ILLEGAL!");
+            success = false;
+        }
+
         if (success)
         {
             EventsHandler.Instance.OnTileMovement?.Invoke(_lastTouchedTile, swipeDestination);

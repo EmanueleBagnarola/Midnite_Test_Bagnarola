@@ -19,8 +19,12 @@ public class GridHandler : MonoBehaviour
 
     private List<Tile> _startingGrid = new List<Tile>();
 
+    private float _tilesHeight = 0.0f;
+
     private void Start()
     {
+        _tilesHeight = GameHandler.Instance.GetGameSettings.TilesHeight;
+
         EventsHandler.Instance.OnTileMovement?.AddListener(OnTileMovement);
         EventsHandler.Instance.OnLevelGenerationEnded?.AddListener(OnLevelGenerationEnded);
     }
@@ -104,7 +108,7 @@ public class GridHandler : MonoBehaviour
                 // Move the moving ingredient on the top of the stack
                 //tile.transform.position = new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y);
                 Ingredient movingIngredient = tile as Ingredient;
-                movingIngredient.MoveIngredient(new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y));
+                movingIngredient.MoveIngredient(new Vector3(coords.x, destinationStack.IngredientsInStack.Count * _tilesHeight, coords.y));
 
                 // Remove the ingredient from the ingredient list of the grid
                 RemoveTileFromGrid(tile);
@@ -124,7 +128,7 @@ public class GridHandler : MonoBehaviour
             // Move the ingredient
             //tile.transform.position = new Vector3(coords.x, GetTileAtDestination(coords).transform.position.y + 0.1f, coords.y);
             Ingredient ingredient = tile as Ingredient;
-            ingredient.MoveIngredient(new Vector3(coords.x, GetTileAtDestination(coords).transform.position.y + 0.1f, coords.y));
+            ingredient.MoveIngredient(new Vector3(coords.x, GetTileAtDestination(coords).transform.position.y + _tilesHeight, coords.y));
 
             // Remove both ingredient from the single ingredients list on the grid
             RemoveTileFromGrid(ingredientOnGrid);
@@ -159,7 +163,7 @@ public class GridHandler : MonoBehaviour
                     {
                         Ingredient ingredientInStack = stack.IngredientsInStack[x];
                         //ingredientInStack.transform.position = new Vector3(coords.x, 0.1f * (stack.IngredientsInStack.Count - x), coords.y);
-                        ingredientInStack.MoveIngredient(new Vector3(coords.x, 0.1f * (stack.IngredientsInStack.Count - x), coords.y));
+                        ingredientInStack.MoveIngredient(new Vector3(coords.x, _tilesHeight * (stack.IngredientsInStack.Count - x), coords.y));
 
                         // Add each ingredient in the new stack with new list order
                         newStack.Add(ingredientInStack);
@@ -190,7 +194,7 @@ public class GridHandler : MonoBehaviour
 
                         // Move the top ingredient of the moving stack
                         //topIngredient.transform.position = new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y);
-                        topIngredient.MoveIngredient(new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y));
+                        topIngredient.MoveIngredient(new Vector3(coords.x, destinationStack.IngredientsInStack.Count * _tilesHeight, coords.y));
                     }
 
                     // Remove the moving stack from the current stacks list
