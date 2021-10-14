@@ -3,9 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GameMode
+{
+    food_random,
+    food_template,
+    numbers
+}
+
 public class GameHandler : MonoBehaviour
 {
     public static GameHandler Instance = null;
+
+    public GameMode GetGameMode
+    {
+        get
+        {
+            return _gameMode;
+        }
+    }
+
+    [SerializeField]
+    private GameMode _gameMode = GameMode.food_random;
 
     private bool _canRestartLevel = false;
 
@@ -32,7 +50,7 @@ public class GameHandler : MonoBehaviour
         if (!_canRestartLevel)
             return;
 
-        GridHandler.Instance.ResetIngredientsPositions();
+        GridHandler.Instance.ResetTilePositions();
     }
 
     public void GenerateNewLevel()

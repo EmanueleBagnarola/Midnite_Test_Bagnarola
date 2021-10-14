@@ -21,15 +21,15 @@ public class SwipeController : MonoBehaviour
     private Vector2 _fingerDown = Vector2.zero;
     private Vector2 _fingerUp = Vector2.zero;
 
-    private Ingredient _lastTouchedIngredient = null;
+    private Tile _lastTouchedTile = null;
 
     private bool _detectSwipe = true;
 
     private void Start()
     {
-        EventsHandler.Instance.OnIngredientTouch?.AddListener((ingredient) =>
+        EventsHandler.Instance.OnTileTouch?.AddListener((tile) =>
         {
-            _lastTouchedIngredient = ingredient;
+            _lastTouchedTile = tile;
         });
     }
 
@@ -140,7 +140,7 @@ public class SwipeController : MonoBehaviour
 
     private void CommitSwipe(SwipeDirection swipeDirection)
     {
-        if (_lastTouchedIngredient == null)
+        if (_lastTouchedTile == null)
             return;
 
         bool success = false;
@@ -149,19 +149,19 @@ public class SwipeController : MonoBehaviour
         switch (swipeDirection)
         {
             case SwipeDirection.up:
-                swipeDestination = _lastTouchedIngredient.GetCoords + new Vector2(0, 1);
+                swipeDestination = _lastTouchedTile.GetCoords + new Vector2(0, 1);
                 break;
 
             case SwipeDirection.down:
-                swipeDestination = _lastTouchedIngredient.GetCoords + new Vector2(0, -1);
+                swipeDestination = _lastTouchedTile.GetCoords + new Vector2(0, -1);
                 break;
 
             case SwipeDirection.left:
-                swipeDestination = _lastTouchedIngredient.GetCoords + new Vector2(-1, 0);
+                swipeDestination = _lastTouchedTile.GetCoords + new Vector2(-1, 0);
                 break;
 
             case SwipeDirection.right:
-                swipeDestination = _lastTouchedIngredient.GetCoords + new Vector2(1, 0);
+                swipeDestination = _lastTouchedTile.GetCoords + new Vector2(1, 0);
                 break;
         }
 
@@ -170,7 +170,7 @@ public class SwipeController : MonoBehaviour
 
         if (success)
         {
-            EventsHandler.Instance.OnIngredientMovement?.Invoke(_lastTouchedIngredient, swipeDestination);
+            EventsHandler.Instance.OnTileMovement?.Invoke(_lastTouchedTile, swipeDestination);
         }
 
         Debug.Log("Swipe success: " + success);

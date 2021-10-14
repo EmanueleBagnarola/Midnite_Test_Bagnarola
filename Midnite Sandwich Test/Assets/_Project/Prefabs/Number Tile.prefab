@@ -125,12 +125,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
+  m_fontSize: 4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 8
+  m_fontSizeMax: 4
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -1.1586282, z: 0, w: 0}
+  m_margin: {x: -0.20684636, y: -1.1586282, z: -0.18783578, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 4209135725965414024}
   - component: {fileID: 7590064895548781169}
   - component: {fileID: 8172210074438780588}
+  - component: {fileID: 5916294130491268456}
   m_Layer: 0
   m_Name: Number Tile
   m_TagString: Untagged
@@ -265,4 +266,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ee53331648d154eb01d9775ac442ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ingredientID: 0
+  _numberText: {fileID: 4512522072711375366}
+  _meshRenderer: {fileID: 7590064895548781169}
+--- !u!65 &5916294130491268456
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172210074438780589}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.10000001, z: 1}
+  m_Center: {x: 0, y: 0.050000004, z: 0}

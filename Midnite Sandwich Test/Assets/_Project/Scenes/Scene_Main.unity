@@ -502,7 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917af284d75eb97449c73fe3198a6b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ingredientsOnGrid: []
+  _tilesOnGrid: []
   _stacksOnGrid: []
   _startingGrid: []
 --- !u!1 &871269337
@@ -1236,10 +1236,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624a0751d32796b4c8a75f3926ac3d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnIngredientTouch:
+  OnTileTouch:
     m_PersistentCalls:
       m_Calls: []
-  OnIngredientMovement:
+  OnTileMovement:
     m_PersistentCalls:
       m_Calls: []
   OnMoveSuccess:
@@ -1480,6 +1480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f28663716d7264fa5c2d472b5f30b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameMode: 0
 --- !u!1 &1832414527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,10 +1511,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ingredientsContainer: {fileID: 11400000, guid: 63364347a37cf054cb333c481811ecbe, type: 2}
-  _levelTemplate: {fileID: 11400000, guid: ff7526dc6f167b64eae3c2b1016b705c, type: 2}
-  _gridSize: 4
+  _foodLevelTemplate: {fileID: 11400000, guid: ff7526dc6f167b64eae3c2b1016b705c, type: 2}
   _additionalPiecesToGenerate: 7
-  _randomGeneration: 0
+  _numberData: {fileID: 11400000, guid: 559d8f059a68e434eb7d58aa02008018, type: 2}
+  _numbersLevelTemplate: {fileID: 11400000, guid: 1fe03700d20260943a992dba818c3e4b, type: 2}
+  _gridSize: 4
 --- !u!4 &1832414529
 Transform:
   m_ObjectHideFlags: 0
