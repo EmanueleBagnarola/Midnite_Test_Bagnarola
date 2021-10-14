@@ -11,7 +11,7 @@ public enum SwipeDirection
     right
 }
 
-public class SwipeHandler : MonoBehaviour
+public class SwipeController : MonoBehaviour
 {
     [SerializeField]
     private float _swipeThreshold = 20f;

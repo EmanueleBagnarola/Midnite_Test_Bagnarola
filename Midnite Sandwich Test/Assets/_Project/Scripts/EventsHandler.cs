@@ -9,13 +9,16 @@ public class EventsHandler : MonoBehaviour
 
     [HideInInspector] public Events.EventIngredientTouch OnIngredientTouch = null;
     [HideInInspector] public Events.EventIngredientMovement OnIngredientMovement = null;
+    [HideInInspector] public Events.EventMoveSuccess OnMoveSuccess = null;
 
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         else
-            Destroy(Instance);
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
     }
 }
 
@@ -23,5 +26,5 @@ public class Events
 {
     [System.Serializable] public class EventIngredientTouch : UnityEvent<Ingredient> { };
     [System.Serializable] public class EventIngredientMovement : UnityEvent<Ingredient, Vector2> { }
-
+    [System.Serializable] public class EventMoveSuccess : UnityEvent { }
 }
