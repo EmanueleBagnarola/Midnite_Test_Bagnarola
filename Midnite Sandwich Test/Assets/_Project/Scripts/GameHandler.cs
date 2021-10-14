@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class GameHandler : MonoBehaviour
     private void Start()
     {
         EventsHandler.Instance.OnMoveSuccess?.AddListener(OnMoveSuccess);
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void OnMoveSuccess()
