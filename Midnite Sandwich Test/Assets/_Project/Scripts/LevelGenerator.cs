@@ -15,7 +15,6 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private int _additionalPiecesToGenerate = 3;
 
-
     [Header("Numbers Level Settings")]
     [SerializeField]
     private NumberData _numberData = null;
@@ -39,7 +38,10 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private List<Vector2> _usedCoordinates = new List<Vector2>();
 
-    private Vector2 _nearPositionNotFound = new Vector2(1000, 1000);
+    /// <summary>
+    /// Used as a callback after the near ingredient position research
+    /// </summary>
+    private Vector2 _nearPositionNotFound = new Vector2(10000, 10000);
 
     private void Start()
     {
@@ -188,8 +190,8 @@ public class LevelGenerator : MonoBehaviour
         Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
         GameObject number = Instantiate(_numberData.NumberPrefab.gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
         Number numberRef = number.GetComponent<Number>();
-        numberRef.SetNumberID(numberID);
-        GridHandler.Instance.AddTileToGrid(number.GetComponent<Number>());
+        numberRef.SetNumberID(int.Parse(numberID));
+        GridHandler.Instance.AddTileToGrid(numberRef);
     }
     #endregion
 
@@ -230,6 +232,7 @@ public class LevelGenerator : MonoBehaviour
 
         EventsHandler.Instance.OnLevelGenerationEnded?.Invoke();
     }
+
     private GameObject GetRandomIngredientInContainer()
     {
         int randomIngredientIndex = Random.Range(0, _ingredientsContainer.IngredientDataArray.Length);

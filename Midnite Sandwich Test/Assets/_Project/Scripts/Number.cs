@@ -6,7 +6,7 @@ using TMPro;
 
 public class Number : Tile, IPointerDownHandler
 {
-    public string GetNumberID
+    public int GetNumberID
     {
         get
         {
@@ -18,19 +18,30 @@ public class Number : Tile, IPointerDownHandler
     private TextMeshPro _numberText = null;
     [SerializeField]
     private MeshRenderer _meshRenderer = null;
+    [SerializeField]
+    private int _numberID = 0;
 
-    private string _numberID = string.Empty;
+    private int _startingNumberID = 0;
 
-    private void Start()
+    public override void Start()
     {
-        _numberText.text = _numberID;
+        base.Start();
 
-        _meshRenderer.material = Resources.Load<Material>("MaterialResources/" + GetNumberID + "_M");
+        _startingNumberID = _numberID;
+        SetNumberID(_numberID);
     }
 
-    public void SetNumberID(string numberID)
+    public override void ResetToStartingPosition()
+    {
+        base.ResetToStartingPosition();
+        SetNumberID(_startingNumberID);
+    }
+
+    public void SetNumberID(int numberID)
     {
         _numberID = numberID;
+        _numberText.text = numberID.ToString();
+        _meshRenderer.material = Resources.Load<Material>("MaterialResources/" + GetNumberID + "_M");
     }
 
     public void OnPointerDown(PointerEventData eventData)

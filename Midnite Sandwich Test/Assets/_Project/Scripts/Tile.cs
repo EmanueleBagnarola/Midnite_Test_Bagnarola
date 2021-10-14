@@ -12,18 +12,15 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public Vector3 GetStartingPosition
-    {
-        get
-        {
-            return _startingPosition;
-        }
-    }
-
     private Vector3 _startingPosition = Vector3.zero;
 
-    private void Start()
+    public virtual void Start()
     {
         _startingPosition = transform.position;
+    }
+
+    public virtual void ResetToStartingPosition()
+    {
+        transform.position = _startingPosition;
     }
 }
