@@ -25,7 +25,7 @@ public class GridHandler : MonoBehaviour
     private void Start()
     {
         EventsHandler.Instance.OnIngredientMovement?.AddListener(OnIngredientMovement);
-        EventsHandler.Instance.OnRandomGenerationEnded?.AddListener(OnRandomGenerationEnded);
+        EventsHandler.Instance.OnLevelGenerationEnded?.AddListener(OnLevelGenerationEnded);
     }
 
     private void Awake()
@@ -235,9 +235,8 @@ public class GridHandler : MonoBehaviour
         EventsHandler.Instance.OnMoveSuccess?.Invoke();
     }
 
-    private void OnRandomGenerationEnded()
+    private void OnLevelGenerationEnded()
     {
-        Debug.Log("ON RANDOM GENERATION ENDED");
         for (int i = 0; i < _ingredientsOnGrid.Count; i++)
         {
             Ingredient ingredient = _ingredientsOnGrid[i];

@@ -24,7 +24,7 @@ public class GameHandler : MonoBehaviour
         InitLog();
 
         EventsHandler.Instance.OnMoveSuccess?.AddListener(OnMoveSuccess);
-        EventsHandler.Instance.OnRandomGenerationEnded?.AddListener(() => _canRestartLevel = true);
+        EventsHandler.Instance.OnLevelGenerationEnded?.AddListener(() => _canRestartLevel = true);
     }
 
     public void RestartLevel()
