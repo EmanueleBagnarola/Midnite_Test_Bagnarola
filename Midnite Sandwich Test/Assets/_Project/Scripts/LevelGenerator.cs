@@ -6,6 +6,8 @@ public class LevelGenerator : MonoBehaviour
 {
     [SerializeField]
     private IngredientsContainer _ingredientsContainer = null;
+    [SerializeField]
+    private LevelTemplate _levelTemplate = null;
 
     /// <summary>
     /// How many rows and columns the grid must have.
@@ -19,6 +21,9 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     [SerializeField]
     private int _additionalPiecesToGenerate = 3;
+
+    [SerializeField]
+    private bool _randomGeneration = true;
 
     /// <summary>
     /// All the coords generate at Start
@@ -48,21 +53,128 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-       StartCoroutine(GenerateRandomLevel());  
+        if (_randomGeneration)
+            StartCoroutine(GenerateRandomLevel());
+
+        else
+            StartCoroutine(GenerateLevelFromTemplate());
     }
+
+
+    #region Generation From Template
+    private IEnumerator GenerateLevelFromTemplate()
+    {
+        yield return null;
+
+        for (int x = 0; x < _gridSize; x++)
+        {
+            for (int y = 0; y < _gridSize; y++)
+            {
+                InstantiateIngredientFromTemplate(_levelTemplate.data.GetRowsData(x)[y], x, y);
+            }
+        }
+    }
+
+    private void InstantiateIngredientFromTemplate(string ingrdientCode, int xTemplatePosition, int yTemplatePosition)
+    {
+        // Code R: random
+        // Code 0: bread
+        // Code 1: bacon
+        // Code 2: cheese
+        // Code 3: egg
+        // Code 4: ham
+        // Code 5: salad
+        // Code 6: onion
+        // Code 7: salami
+        // Code 8: tomato
+
+        if (ingrdientCode == "R" || ingrdientCode == "r")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(GetRandomIngredientInContainer(), new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+
+        if (ingrdientCode == "0")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+        if (ingrdientCode == "1")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bacon).gameObject, new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+        if (ingrdientCode == "2")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.cheese).gameObject, new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+        if (ingrdientCode == "3")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.egg).gameObject, new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+        if (ingrdientCode == "4")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.ham).gameObject, new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+        if (ingrdientCode == "5")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.salad).gameObject, new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+        if (ingrdientCode == "6")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.onion).gameObject, new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+        if (ingrdientCode == "7")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.salami).gameObject, new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+        if (ingrdientCode == "8")
+        {
+            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.tomato).gameObject, new Vector3(coords.x, 0.05f, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddIngredientToGrid(ingredient.GetComponent<Ingredient>());
+        }
+    }
+
+    private Vector2 GetCoordAtTemplatePosition(int x, int y)
+    {
+        int xCoord;
+        int yCoord;
+
+        xCoord = (int)MapValue.Map(y, 0, 3, 0, 3);
+        yCoord = (int)MapValue.Map(x, 0, 3, 0, -3);
+
+        return new Vector2(xCoord, yCoord);
+    }
+    #endregion
 
     #region Random Generation
     private IEnumerator GenerateRandomLevel()
     {
         // Spawn the first piece of bread
         Vector2 firstPosition = GetRandomFreePosition();
-        GameObject firstBread = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(firstPosition.x, 0, firstPosition.y), Quaternion.identity);
+        GameObject firstBread = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(firstPosition.x, 0.05f, firstPosition.y), Quaternion.identity);
         // Add the first bread to the Grid Ingredients list
         GridHandler.Instance.AddIngredientToGrid(firstBread.GetComponent<Ingredient>());
 
         // Spawn the second piece of bread next to it, it any available position
         Vector2 nearPosition = GetRandomNearPosition(new Vector2(firstBread.transform.position.x, firstBread.transform.position.z));
-        GameObject secondBread = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(nearPosition.x, 0, nearPosition.y), Quaternion.identity);
+        GameObject secondBread = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(nearPosition.x, 0.05f, nearPosition.y), Quaternion.identity);
         // Add the second bread to the Grid Ingredients list
         GridHandler.Instance.AddIngredientToGrid(secondBread.GetComponent<Ingredient>());
 
@@ -82,13 +194,12 @@ public class LevelGenerator : MonoBehaviour
             }
 
             GameObject ingredient = GetRandomIngredientInContainer();
-            GameObject newIngredient = Instantiate(ingredient, new Vector3(randomNearPosition.x, 0, randomNearPosition.y), Quaternion.identity);
+            GameObject newIngredient = Instantiate(ingredient, new Vector3(randomNearPosition.x, 0.05f, randomNearPosition.y), Quaternion.identity);
             GridHandler.Instance.AddIngredientToGrid(newIngredient.GetComponent<Ingredient>());
         }
 
         EventsHandler.Instance.OnRandomGenerationEnded?.Invoke();
     }
-
     private GameObject GetRandomIngredientInContainer()
     {
         int randomIngredientIndex = Random.Range(0, _ingredientsContainer.IngredientDataArray.Length);
