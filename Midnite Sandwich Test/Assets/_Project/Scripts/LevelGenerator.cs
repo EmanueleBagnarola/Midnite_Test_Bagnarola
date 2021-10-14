@@ -23,6 +23,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private LevelTemplate[] _numbersLevelTemplates = null;
 
+    [SerializeField]
+    private float _instantiateHeight = 0.0f;
+
     /// <summary>
     /// All the coords generate at Start
     /// </summary>
@@ -85,7 +88,11 @@ public class LevelGenerator : MonoBehaviour
         {
             for (int y = 0; y < _gridSize; y++)
             {
-                InstantiateIngredientFromTemplate(randomTemplate.data.GetRowsData(x)[y], x, y);
+                string code = randomTemplate.data.GetRowsData(x)[y];
+                if(code != string.Empty) // Skip wait time for animation if template row is empty
+                    yield return new WaitForSeconds(0.2f);
+
+                InstantiateIngredientFromTemplate(code, x, y);
             }
         }
 
@@ -105,68 +112,61 @@ public class LevelGenerator : MonoBehaviour
         // Code 7: salami
         // Code 8: tomato
 
+        Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
+        Ingredient ingredient = null;
+
         if (ingredientCode == "R" || ingredientCode == "r")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(GetRandomIngredientInContainer(), new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            GameObject randomIngredient = Instantiate(GetRandomIngredientInContainer(), new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
+            GridHandler.Instance.AddTileToGrid(randomIngredient.GetComponent<Ingredient>());
+            randomIngredient.transform.localScale = Vector3.zero;
+            iTween.ScaleTo(randomIngredient, Vector3.one, 0.15f);
         }
-
         if (ingredientCode == "0")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            ingredient = _ingredientsContainer.GetIngredient(IngredientID.bread);  
         }
         if (ingredientCode == "1")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bacon).gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            ingredient = _ingredientsContainer.GetIngredient(IngredientID.bacon);
         }
         if (ingredientCode == "2")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.cheese).gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            ingredient = _ingredientsContainer.GetIngredient(IngredientID.cheese);
         }
         if (ingredientCode == "3")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.egg).gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            ingredient = _ingredientsContainer.GetIngredient(IngredientID.egg);
         }
         if (ingredientCode == "4")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.ham).gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            ingredient = _ingredientsContainer.GetIngredient(IngredientID.ham);
         }
         if (ingredientCode == "5")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.salad).gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            ingredient = _ingredientsContainer.GetIngredient(IngredientID.salad);
         }
         if (ingredientCode == "6")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.onion).gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            ingredient = _ingredientsContainer.GetIngredient(IngredientID.onion);
         }
         if (ingredientCode == "7")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.salami).gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            ingredient = _ingredientsContainer.GetIngredient(IngredientID.salami);
         }
         if (ingredientCode == "8")
         {
-            Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-            GameObject ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.tomato).gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
+            Instantiate(_ingredientsContainer.GetIngredient(IngredientID.tomato).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
-    } 
+
+        if (ingredient == null)
+            return;
+
+        GameObject ingredientObj = Instantiate(ingredient.gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
+        GridHandler.Instance.AddTileToGrid(ingredient);
+        ingredientObj.transform.localScale = Vector3.zero;
+        iTween.ScaleTo(ingredientObj, Vector3.one, 0.15f);
+    }
     #endregion
 
     #region Number Generation From Template
@@ -180,7 +180,11 @@ public class LevelGenerator : MonoBehaviour
         {
             for (int y = 0; y < _gridSize; y++)
             {
-                InstantiateNumbersFromTemplate(randomTemplate.data.GetRowsData(x)[y], x, y);
+                string code = randomTemplate.data.GetRowsData(x)[y];
+                if (code != string.Empty) // Skip wait time for animation if template row is empty
+                    yield return new WaitForSeconds(0.2f);
+
+                InstantiateNumbersFromTemplate(code, x, y);
             }
         }
 
@@ -194,6 +198,8 @@ public class LevelGenerator : MonoBehaviour
 
         Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
         GameObject number = Instantiate(_numberData.NumberPrefab.gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
+        number.transform.localScale = Vector3.zero;
+        iTween.ScaleTo(number, Vector3.one, 0.15f);
         Number numberRef = number.GetComponent<Number>();
         numberRef.SetNumberID(int.Parse(numberID));
         GridHandler.Instance.AddTileToGrid(numberRef);
@@ -205,13 +211,19 @@ public class LevelGenerator : MonoBehaviour
     {
         // Spawn the first piece of bread
         Vector2 firstPosition = GetRandomFreePosition();
-        GameObject firstBread = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(firstPosition.x, 0f, firstPosition.y), Quaternion.identity);
+        GameObject firstBread = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(firstPosition.x, _instantiateHeight, firstPosition.y), Quaternion.identity);
+        firstBread.transform.localScale = Vector3.zero;
+        iTween.ScaleTo(firstBread, Vector3.one, 0.15f);
         // Add the first bread to the Grid Ingredients list
         GridHandler.Instance.AddTileToGrid(firstBread.GetComponent<Ingredient>());
 
+        yield return new WaitForSeconds(0.2f);
+
         // Spawn the second piece of bread next to it, it any available position
         Vector2 nearPosition = GetRandomNearPosition(new Vector2(firstBread.transform.position.x, firstBread.transform.position.z));
-        GameObject secondBread = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(nearPosition.x, 0f, nearPosition.y), Quaternion.identity);
+        GameObject secondBread = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(nearPosition.x, _instantiateHeight, nearPosition.y), Quaternion.identity);
+        secondBread.transform.localScale = Vector3.zero;
+        iTween.ScaleTo(secondBread, Vector3.one, 0.15f);
         // Add the second bread to the Grid Ingredients list
         GridHandler.Instance.AddTileToGrid(secondBread.GetComponent<Ingredient>());
 
@@ -231,7 +243,9 @@ public class LevelGenerator : MonoBehaviour
             }
 
             GameObject ingredient = GetRandomIngredientInContainer();
-            GameObject newIngredient = Instantiate(ingredient, new Vector3(randomNearPosition.x, 0f, randomNearPosition.y), Quaternion.identity);
+            GameObject newIngredient = Instantiate(ingredient, new Vector3(randomNearPosition.x, _instantiateHeight, randomNearPosition.y), Quaternion.identity);
+            newIngredient.transform.localScale = Vector3.zero;
+            iTween.ScaleTo(newIngredient, Vector3.one, 0.15f);
             GridHandler.Instance.AddTileToGrid(newIngredient.GetComponent<Ingredient>());
         }
 

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f0c0053564633419a267e97e1c2e7f, type: 3}
   m_Name: Egg
   m_EditorClassIdentifier: 
-  IngredientPrefab: {fileID: 357593822376299634, guid: 243c2ffa735decd44b80debd30986985, type: 3}
+  IngredientPrefab: {fileID: 2538708874268335536, guid: 09514a2c58d733b4089bd3bbfec8db2b, type: 3}

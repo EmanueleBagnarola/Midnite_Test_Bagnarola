@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f0c0053564633419a267e97e1c2e7f, type: 3}
   m_Name: Tomato
   m_EditorClassIdentifier: 
-  IngredientPrefab: {fileID: -691882096005752158, guid: 6528793be95d08344afab74352046e4b, type: 3}
+  IngredientPrefab: {fileID: 8769521256043713882, guid: 1678d3bdd531a1040a66b7ed870de6af, type: 3}

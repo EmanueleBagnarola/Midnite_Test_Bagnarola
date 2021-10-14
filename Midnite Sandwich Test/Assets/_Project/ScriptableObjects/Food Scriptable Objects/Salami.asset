@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f0c0053564633419a267e97e1c2e7f, type: 3}
   m_Name: Salami
   m_EditorClassIdentifier: 
-  IngredientPrefab: {fileID: 2818640554500441645, guid: eeb47fbdca0012042ac072df5477fde8, type: 3}
+  IngredientPrefab: {fileID: 5102773565947853159, guid: db5048b94cd49564d80567eacea2f2b0, type: 3}

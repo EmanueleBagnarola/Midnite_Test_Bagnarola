@@ -14,6 +14,14 @@ public class Number : Tile, IPointerDownHandler
         }
     }
 
+    public bool IsMoved
+    {
+        get
+        {
+            return _isMoved;
+        }
+    }
+
     [SerializeField]
     private TextMeshPro _numberText = null;
     [SerializeField]
@@ -22,6 +30,8 @@ public class Number : Tile, IPointerDownHandler
     private int _numberID = 0;
 
     private int _startingNumberID = 0;
+
+    private bool _isMoved = false;
 
     public override void Start()
     {
@@ -35,6 +45,16 @@ public class Number : Tile, IPointerDownHandler
     {
         base.ResetToStartingPosition();
         SetNumberID(_startingNumberID);
+        _isMoved = false;
+    }
+
+    public void MoveNumber(Vector3 destination)
+    {
+        _isMoved = true;
+        //HideObject();
+        _numberText.text = string.Empty;
+        iTween.MoveTo(gameObject, destination - new Vector3(0, 0.01f, 0), 0.2f);
+        Invoke(nameof(HideObject), 0.25f);
     }
 
     public void SetNumberID(int numberID)
@@ -42,6 +62,11 @@ public class Number : Tile, IPointerDownHandler
         _numberID = numberID;
         _numberText.text = numberID.ToString();
         _meshRenderer.material = Resources.Load<Material>("MaterialResources/" + GetNumberID + "_M");
+    }
+
+    private void HideObject()
+    {
+        gameObject.SetActive(false);
     }
 
     public void OnPointerDown(PointerEventData eventData)

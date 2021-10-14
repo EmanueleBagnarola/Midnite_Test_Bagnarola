@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f0c0053564633419a267e97e1c2e7f, type: 3}
   m_Name: Bacon
   m_EditorClassIdentifier: 
-  IngredientPrefab: {fileID: 3412472442410901694, guid: ffac4a5abd22ed14997660b65eb474a1, type: 3}
+  IngredientPrefab: {fileID: 8344355547897638735, guid: 73fc54ccae987624689fa4927cfd4e7f, type: 3}

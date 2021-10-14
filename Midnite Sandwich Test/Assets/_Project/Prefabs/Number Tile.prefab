@@ -268,6 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _numberText: {fileID: 4512522072711375366}
   _meshRenderer: {fileID: 7590064895548781169}
+  _numberID: 0
 --- !u!65 &5916294130491268456
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -279,5 +280,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.10000001, z: 1}
+  m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0.050000004, z: 0}

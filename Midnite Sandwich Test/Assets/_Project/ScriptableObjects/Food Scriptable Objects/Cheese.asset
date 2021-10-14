@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f0c0053564633419a267e97e1c2e7f, type: 3}
   m_Name: Cheese
   m_EditorClassIdentifier: 
-  IngredientPrefab: {fileID: 1000811617932352458, guid: 5169a092c92b9d345981395a4e02e422, type: 3}
+  IngredientPrefab: {fileID: 7012359488984033694, guid: 8380946b5018db34cb774631aa825e7e, type: 3}

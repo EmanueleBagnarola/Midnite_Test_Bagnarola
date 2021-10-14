@@ -202,6 +202,8 @@ public class GridHandler : MonoBehaviour
                 }
             }
         }
+
+        EventsHandler.Instance.OnMoveSuccess?.Invoke();
     }
 
     public Ingredient GetRandomIngredientOnGrid()
@@ -254,7 +256,10 @@ public class GridHandler : MonoBehaviour
         }
 
         numberAtDestination.SetNumberID(numberAtDestination.GetNumberID + movedNumber.GetNumberID);
-        movedNumber.gameObject.SetActive(false);
+        movedNumber.MoveNumber(new Vector3(coords.x, 0, coords.y));
+        //movedNumber.gameObject.SetActive(false);
+
+        EventsHandler.Instance.OnMoveSuccess?.Invoke();
     }
     #endregion
 
@@ -268,8 +273,6 @@ public class GridHandler : MonoBehaviour
         {
             HandleNumberMovement(tile, coords);
         }
-
-        EventsHandler.Instance.OnMoveSuccess?.Invoke();
     }
 
     private void OnLevelGenerationEnded()
@@ -294,7 +297,6 @@ public class GridHandler : MonoBehaviour
         for (int i = 0; i < _tilesOnGrid.Count; i++)
         {
             Tile tile = _tilesOnGrid[i];
-            tile.gameObject.SetActive(true);
             tile.ResetToStartingPosition();
         }
 
@@ -318,16 +320,17 @@ public class GridHandler : MonoBehaviour
         }
         else if(currentGameMode == GameMode.numbers)
         {
-            int currentActiveTiles = 0;
+            int currentUnmovedTiles = 0;
 
             for (int i = 0; i < _tilesOnGrid.Count; i++)
             {
                 Tile tile = _tilesOnGrid[i];
-                if (tile.gameObject.activeSelf)
-                    currentActiveTiles++;
+                Number number = (Number)tile;
+                if (!number.IsMoved)
+                    currentUnmovedTiles++;
             }
 
-            if (currentActiveTiles == 1)
+            if (currentUnmovedTiles == 1)
                 return true;
         }
 
@@ -336,7 +339,8 @@ public class GridHandler : MonoBehaviour
 
     public bool IsInGridRange(Vector2 positionToCheck)
     {
-        return positionToCheck.x >= 0 && positionToCheck.x <= 3 && positionToCheck.y >= -3 && positionToCheck.y <= 0;
+        int gridSize = GameHandler.Instance.GetGameSettings.GridSize;
+        return positionToCheck.x >= 0 && positionToCheck.x <= gridSize - 1 && positionToCheck.y >= -(gridSize-1) && positionToCheck.y <= 0;
     }
 }
 

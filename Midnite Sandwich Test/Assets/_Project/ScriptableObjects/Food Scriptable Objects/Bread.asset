@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f0c0053564633419a267e97e1c2e7f, type: 3}
   m_Name: Bread
   m_EditorClassIdentifier: 
-  IngredientPrefab: {fileID: 4949207031008712814, guid: ca212ba2ffea07746aab6bf4ff657587, type: 3}
+  IngredientPrefab: {fileID: 6205304550797816005, guid: 2cde8ed4de36a3947bcee35c050ae2ca, type: 3}

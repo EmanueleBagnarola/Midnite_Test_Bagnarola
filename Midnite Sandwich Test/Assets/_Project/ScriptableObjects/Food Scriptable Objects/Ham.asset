@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f0c0053564633419a267e97e1c2e7f, type: 3}
   m_Name: Ham
   m_EditorClassIdentifier: 
-  IngredientPrefab: {fileID: -8790184856127542677, guid: a440b479cc6140b41a0c55499042c9f5, type: 3}
+  IngredientPrefab: {fileID: 8824437551294089477, guid: cba4a0f3c66b3d347ac1d786fc3e2029, type: 3}

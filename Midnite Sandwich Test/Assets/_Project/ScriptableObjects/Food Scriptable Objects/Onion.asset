@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f0c0053564633419a267e97e1c2e7f, type: 3}
   m_Name: Onion
   m_EditorClassIdentifier: 
-  IngredientPrefab: {fileID: -2699457973197243423, guid: 7c4871f7aba3bbb49b0ff1700591f30e, type: 3}
+  IngredientPrefab: {fileID: 479816171167311984, guid: a5ce046a81222ed41818bed5af3f822a, type: 3}
