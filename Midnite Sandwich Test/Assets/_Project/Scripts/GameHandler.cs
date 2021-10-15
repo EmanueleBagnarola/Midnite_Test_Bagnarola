@@ -45,7 +45,6 @@ public class GameHandler : MonoBehaviour
     [SerializeField]
     private GameSettings _gameSettings = null;
 
-    [SerializeField]
     private int _extraRandomIngredients = 1;
 
     private void Awake()
