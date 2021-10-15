@@ -106,99 +106,95 @@ public class GridHandler : MonoBehaviour
                 destinationStack.IngredientsInStack.Add((Ingredient)tile);
 
                 // Move the moving ingredient on the top of the stack
-                //tile.transform.position = new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y);
                 Ingredient movingIngredient = tile as Ingredient;
                 movingIngredient.MoveIngredient(new Vector3(coords.x, destinationStack.IngredientsInStack.Count * _tilesHeight, coords.y));
 
                 // Remove the ingredient from the ingredient list of the grid
                 RemoveTileFromGrid(tile);
-                return;
             }
-
-            // Create a new stack
-            IngredientStack stack = new IngredientStack(coords);
-
-            // Add the ingredient where the moved ingredient went on to
-            Ingredient ingredientOnGrid = (Ingredient)GetTileAtDestination(coords);
-            stack.AddIngredient(ingredientOnGrid);
-
-            // Add the moved ingredient
-            stack.AddIngredient((Ingredient)tile);
-
-            // Move the ingredient
-            //tile.transform.position = new Vector3(coords.x, GetTileAtDestination(coords).transform.position.y + 0.1f, coords.y);
-            Ingredient ingredient = tile as Ingredient;
-            ingredient.MoveIngredient(new Vector3(coords.x, GetTileAtDestination(coords).transform.position.y + _tilesHeight, coords.y));
-
-            // Remove both ingredient from the single ingredients list on the grid
-            RemoveTileFromGrid(ingredientOnGrid);
-            RemoveTileFromGrid(tile);
-
-            // Add the new stack in the IngredientStack list
-            _ingredientStacksOnGrid.Add(stack);
-            return;
-        }
-
-        // Stack move
-        for (int i = 0; i < _ingredientStacksOnGrid.Count; i++)
-        {
-            IngredientStack stack = _ingredientStacksOnGrid[i];
-            if (stack.IngredientsInStack.Contains((Ingredient)tile))
+            else
             {
-                Debug.LogWarning("THE INGREDIENT [" + tile.name + "] IS PART OF A STACK");
+                // Create a new stack
+                IngredientStack stack = new IngredientStack(coords);
 
-                // Stack on single ingredient move
-                if (!IsDestinationOccupiedByAStack(coords))
+                // Add the ingredient where the moved ingredient went on to
+                Ingredient ingredientOnGrid = (Ingredient)GetTileAtDestination(coords);
+                stack.AddIngredient(ingredientOnGrid);
+
+                // Add the moved ingredient
+                stack.AddIngredient((Ingredient)tile);
+
+                // Move the ingredient
+                Ingredient ingredient = tile as Ingredient;
+                ingredient.MoveIngredient(new Vector3(coords.x, GetTileAtDestination(coords).transform.position.y + _tilesHeight, coords.y));
+
+                // Remove both ingredient from the single ingredients list on the grid
+                RemoveTileFromGrid(ingredientOnGrid);
+                RemoveTileFromGrid(tile);
+
+                // Add the new stack in the IngredientStack list
+                _ingredientStacksOnGrid.Add(stack);
+            }
+        }
+        else
+        {
+            // Stack move
+            for (int i = 0; i < _ingredientStacksOnGrid.Count; i++)
+            {
+                IngredientStack stack = _ingredientStacksOnGrid[i];
+                if (stack.IngredientsInStack.Contains((Ingredient)tile))
                 {
-                    Debug.LogWarning("MOVING THE STACK ON TOP OF A SINGLE INGREDIENT");
+                    Debug.LogWarning("THE INGREDIENT [" + tile.name + "] IS PART OF A STACK");
 
-                    // If not
-
-                    // Create a new stack list
-                    List<Ingredient> newStack = new List<Ingredient>();
-                    newStack.Add((Ingredient)GetTileAtDestination(coords));
-
-                    // Move the ingredients on the single ingredient from last to first
-                    for (int x = stack.IngredientsInStack.Count - 1; x >= 0; x--)
+                    // Stack on single ingredient move
+                    if (!IsDestinationOccupiedByAStack(coords))
                     {
-                        Ingredient ingredientInStack = stack.IngredientsInStack[x];
-                        //ingredientInStack.transform.position = new Vector3(coords.x, 0.1f * (stack.IngredientsInStack.Count - x), coords.y);
-                        ingredientInStack.MoveIngredient(new Vector3(coords.x, _tilesHeight * (stack.IngredientsInStack.Count - x), coords.y));
+                        Debug.LogWarning("MOVING THE STACK ON TOP OF A SINGLE INGREDIENT");
 
-                        // Add each ingredient in the new stack with new list order
-                        newStack.Add(ingredientInStack);
+                        // Create a new stack list
+                        List<Ingredient> newStack = new List<Ingredient>();
+                        newStack.Add((Ingredient)GetTileAtDestination(coords));
+
+                        // Move the ingredients on the single ingredient from last to first
+                        for (int x = stack.IngredientsInStack.Count - 1; x >= 0; x--)
+                        {
+                            Ingredient ingredientInStack = stack.IngredientsInStack[x];
+                            ingredientInStack.MoveIngredient(new Vector3(coords.x, _tilesHeight * (stack.IngredientsInStack.Count - x), coords.y));
+
+                            // Add each ingredient in the new stack with new list order
+                            newStack.Add(ingredientInStack);
+                        }
+
+                        // Modify the current stack list
+                        stack.SetStack(newStack);
+
+                        // Remove the ingredient from the grid list
+                        RemoveTileFromGrid(GetTileAtDestination(coords));
+
+                        // Update the stack position
+                        stack.Coords = stack.IngredientsInStack[0].GetCoords;
                     }
 
-                    // Modify the current stack list
-                    stack.SetStack(newStack);
-
-                    // Remove the ingredient from the grid list
-                    RemoveTileFromGrid(GetTileAtDestination(coords));
-
-                    // Update the stack position
-                    stack.Coords = stack.IngredientsInStack[0].GetCoords;
-                }
-
-                // Stack on a stack move
-                else
-                {
-                    IngredientStack movingStack = GetStackAtDestination(tile.GetCoords);
-                    IngredientStack destinationStack = GetStackAtDestination(coords);
-
-                    // Add every ingredient of the moving stack in the destination stack ingredients list, from last to first
-                    for (int x = movingStack.IngredientsInStack.Count - 1; x >= 0; x--)
+                    // Stack on a stack move
+                    else
                     {
-                        Ingredient topIngredient = movingStack.IngredientsInStack[x];
+                        IngredientStack movingStack = GetStackAtDestination(tile.GetCoords);
+                        IngredientStack destinationStack = GetStackAtDestination(coords);
 
-                        destinationStack.AddIngredient(topIngredient);
+                        // Add every ingredient of the moving stack in the destination stack ingredients list, from last to first
+                        for (int x = movingStack.IngredientsInStack.Count - 1; x >= 0; x--)
+                        {
+                            Ingredient topIngredient = movingStack.IngredientsInStack[x];
 
-                        // Move the top ingredient of the moving stack
-                        //topIngredient.transform.position = new Vector3(coords.x, destinationStack.IngredientsInStack.Count * 0.1f, coords.y);
-                        topIngredient.MoveIngredient(new Vector3(coords.x, destinationStack.IngredientsInStack.Count * _tilesHeight, coords.y));
+                            destinationStack.AddIngredient(topIngredient);
+
+                            // Move the top ingredient of the moving stack
+                            topIngredient.MoveIngredient(new Vector3(coords.x, destinationStack.IngredientsInStack.Count * _tilesHeight, coords.y));
+                        }
+
+                        // Remove the moving stack from the current stacks list
+                        _ingredientStacksOnGrid.Remove(movingStack);
                     }
-
-                    // Remove the moving stack from the current stacks list
-                    _ingredientStacksOnGrid.Remove(movingStack);
                 }
             }
         }

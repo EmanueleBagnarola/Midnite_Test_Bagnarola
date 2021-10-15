@@ -90,6 +90,11 @@ public class GameHandler : MonoBehaviour
 
     private void OnMoveSuccess()
     {
+        Invoke(nameof(CheckWinConditionDelay), 0.8f);
+    }
+
+    private void CheckWinConditionDelay()
+    {
         if (GridHandler.Instance.CheckWinCondition())
         {
             Debug.LogWarning("WIN");
