@@ -53,7 +53,12 @@ public class GameHandler : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
 
         EventsHandler.Instance.OnMoveSuccess?.AddListener(OnMoveSuccess);
+    }
 
+    public void InitGameModeAndLoadScene(GameMode gameMode)
+    {
+        _gameMode = gameMode;
+        SceneManager.LoadScene("Scene_Game");
     }
 
     public void RestartLevel()
@@ -64,6 +69,11 @@ public class GameHandler : MonoBehaviour
     public void GenerateNewLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void QuitGame()
+    {
+        SceneManager.LoadScene("Scene_MainMenu");
     }
 
     private void OnMoveSuccess()

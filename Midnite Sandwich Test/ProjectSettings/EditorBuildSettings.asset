@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Project/Scenes/Scene_Main.unity
+    path: Assets/_Project/Scenes/Scene_MainMenu.unity
+    guid: 46a16df644790754fbfd175cad055d99
+  - enabled: 1
+    path: Assets/_Project/Scenes/Scene_Food_Random.unity
     guid: c1ee4744b7f3c4f4c9d070abe779b299
+  - enabled: 1
+    path: Assets/_Project/Scenes/Scene_Food_Templates.unity
+    guid: 1ebcd7c7838ef844f866b54695c938d1
+  - enabled: 1
+    path: Assets/_Project/Scenes/Scene_2048.unity
+    guid: cfc8322e8af2a1948a395a28a53f0752
+  - enabled: 1
+    path: Assets/_Project/Scenes/Scene_Game.unity
+    guid: 53551ae1dd8e9ab47a2d2e02fb198162
   m_configObjects: {}

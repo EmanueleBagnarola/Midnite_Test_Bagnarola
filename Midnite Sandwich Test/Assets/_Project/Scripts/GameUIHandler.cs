@@ -11,6 +11,8 @@ public class GameUIHandler : MonoBehaviour
     private Button _restartLevelButton = null;
     [SerializeField]
     private Button _generateLevelButton = null;
+    [SerializeField]
+    private Button _quitButton = null;
 
     [SerializeField]
     private GameObject _victoryPanel = null;
@@ -34,5 +36,6 @@ public class GameUIHandler : MonoBehaviour
 
         _restartLevelButton.onClick.AddListener(GameHandler.Instance.RestartLevel);
         _generateLevelButton.onClick.AddListener(GameHandler.Instance.GenerateNewLevel);
+        _quitButton.onClick.AddListener(GameHandler.Instance.QuitGame);
     }
 }
