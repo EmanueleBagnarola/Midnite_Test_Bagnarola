@@ -173,6 +173,9 @@ public class SwipeController : MonoBehaviour
                 break;
         }
 
+        Debug.Log("dest occ: " + GridHandler.Instance.IsDestinationOccupied(swipeDestination));
+        Debug.Log("grid range: " + GridHandler.Instance.IsInGridRange(swipeDestination));
+
         if (GridHandler.Instance.IsDestinationOccupied(swipeDestination) && GridHandler.Instance.IsInGridRange(swipeDestination))
             success = true;
 

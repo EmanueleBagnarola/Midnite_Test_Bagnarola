@@ -101,71 +101,56 @@ public class LevelGenerator : MonoBehaviour
 
     private void InstantiateIngredientFromTemplate(string ingredientCode, int xTemplatePosition, int yTemplatePosition)
     {
-        // Code R: random
-        // Code 0: bread
-        // Code 1: bacon
-        // Code 2: cheese
-        // Code 3: egg
-        // Code 4: ham
-        // Code 5: salad
-        // Code 6: onion
-        // Code 7: salami
-        // Code 8: tomato
-
         Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-        Ingredient ingredient = null;
+        GameObject ingredient = null;
 
         if (ingredientCode == "R" || ingredientCode == "r")
         {
-            GameObject randomIngredient = Instantiate(GetRandomIngredientInContainer(), new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
-            GridHandler.Instance.AddTileToGrid(randomIngredient.GetComponent<Ingredient>());
-            randomIngredient.transform.localScale = Vector3.zero;
-            iTween.ScaleTo(randomIngredient, Vector3.one, 0.15f);
+            ingredient = Instantiate(GetRandomIngredientInContainer(), new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
         if (ingredientCode == "0")
         {
-            ingredient = _ingredientsContainer.GetIngredient(IngredientID.bread);  
+            ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bread).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
         if (ingredientCode == "1")
         {
-            ingredient = _ingredientsContainer.GetIngredient(IngredientID.bacon);
+            ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.bacon).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
         if (ingredientCode == "2")
         {
-            ingredient = _ingredientsContainer.GetIngredient(IngredientID.cheese);
+            ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.cheese).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
         if (ingredientCode == "3")
         {
-            ingredient = _ingredientsContainer.GetIngredient(IngredientID.egg);
+            ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.egg).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
         if (ingredientCode == "4")
         {
-            ingredient = _ingredientsContainer.GetIngredient(IngredientID.ham);
+            ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.ham).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
         if (ingredientCode == "5")
         {
-            ingredient = _ingredientsContainer.GetIngredient(IngredientID.salad);
+            ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.salad).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
         if (ingredientCode == "6")
         {
-            ingredient = _ingredientsContainer.GetIngredient(IngredientID.onion);
+            ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.onion).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
         if (ingredientCode == "7")
         {
-            ingredient = _ingredientsContainer.GetIngredient(IngredientID.salami);
+            ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.salami).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
         if (ingredientCode == "8")
         {
-            Instantiate(_ingredientsContainer.GetIngredient(IngredientID.tomato).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
+            ingredient = Instantiate(_ingredientsContainer.GetIngredient(IngredientID.tomato).gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         }
 
         if (ingredient == null)
             return;
 
-        GameObject ingredientObj = Instantiate(ingredient.gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
-        GridHandler.Instance.AddTileToGrid(ingredient);
-        ingredientObj.transform.localScale = Vector3.zero;
-        iTween.ScaleTo(ingredientObj, Vector3.one, 0.15f);
+        ingredient.transform.localScale = Vector3.zero;
+        iTween.ScaleTo(ingredient, Vector3.one, 0.15f);
+        GridHandler.Instance.AddTileToGrid(ingredient.GetComponent<Ingredient>());
     }
     #endregion
 
