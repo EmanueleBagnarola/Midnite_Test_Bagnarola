@@ -30,11 +30,22 @@ public class GameHandler : MonoBehaviour
         }
     }
 
+    public int GetExtraRandomIngredients
+    {
+        get
+        {
+            return _extraRandomIngredients;
+        }
+    }
+
     [SerializeField]
     private GameMode _gameMode = GameMode.food_random;
 
     [SerializeField]
     private GameSettings _gameSettings = null;
+
+    [SerializeField]
+    private int _extraRandomIngredients = 1;
 
     private void Awake()
     {
@@ -55,9 +66,10 @@ public class GameHandler : MonoBehaviour
         EventsHandler.Instance.OnMoveSuccess?.AddListener(OnMoveSuccess);
     }
 
-    public void InitGameModeAndLoadScene(GameMode gameMode)
+    public void InitGameModeAndLoadScene(int extraRandomIngredients, GameMode gameMode)
     {
         _gameMode = gameMode;
+        _extraRandomIngredients = extraRandomIngredients;
         SceneManager.LoadScene("Scene_Game");
     }
 

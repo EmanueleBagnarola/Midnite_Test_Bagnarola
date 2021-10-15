@@ -17,4 +17,7 @@ public class GameSettings : ScriptableObject
     /// </summary>
     [Header("Indicates how much height each tile rises when stacked")]
     public float TilesHeight = 0.1f;
+
+    [Header("How much time from the spawn of each tile (animation)")]
+    public float TilesSpawnDelay = 0.2f;
 }

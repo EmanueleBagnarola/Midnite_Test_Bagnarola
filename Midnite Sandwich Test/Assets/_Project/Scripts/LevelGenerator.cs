@@ -10,13 +10,6 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private LevelTemplate[] _foodLevelTemplates = null;
 
-    /// <summary>
-    /// Extra ingredients to spawn after bread
-    /// </summary>
-    [Header("Random Food Generation only")]
-    [SerializeField]
-    private int _additionalPiecesToGenerate = 3;
-
     [Header("Numbers Level Settings")]
     [SerializeField]
     private NumberData _numberData = null;
@@ -43,11 +36,18 @@ public class LevelGenerator : MonoBehaviour
 
     private int _gridSize = 0;
 
-    private int _currentLevelIndex = -1;
+    /// <summary>
+    /// Extra ingredients to spawn after bread
+    /// </summary>
+    private int _additionalPiecesToGenerate = 0;
+
+    private float _spawnDelay = 0.0f;
 
     private void Start()
     {
         _gridSize = GameHandler.Instance.GetGameSettings.GridSize;
+        _spawnDelay = GameHandler.Instance.GetGameSettings.TilesSpawnDelay;
+        _additionalPiecesToGenerate = GameHandler.Instance.GetExtraRandomIngredients;
 
         GenerateCoordinates();
     }
@@ -90,7 +90,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 string code = randomTemplate.data.GetRowsData(x)[y];
                 if(code != string.Empty) // Skip wait time for animation if template row is empty
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(_spawnDelay);
 
                 InstantiateIngredientFromTemplate(code, x, y);
             }
@@ -167,7 +167,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 string code = randomTemplate.data.GetRowsData(x)[y];
                 if (code != string.Empty) // Skip wait time for animation if template row is empty
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(_spawnDelay);
 
                 InstantiateNumbersFromTemplate(code, x, y);
             }
@@ -202,7 +202,7 @@ public class LevelGenerator : MonoBehaviour
         // Add the first bread to the Grid Ingredients list
         GridHandler.Instance.AddTileToGrid(firstBread.GetComponent<Ingredient>());
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(_spawnDelay);
 
         // Spawn the second piece of bread next to it, it any available position
         Vector2 nearPosition = GetRandomNearPosition(new Vector2(firstBread.transform.position.x, firstBread.transform.position.z));
@@ -214,9 +214,9 @@ public class LevelGenerator : MonoBehaviour
 
 
         // Spawn each ingredient near to an existing one
-        for (int i = 0; i <= _additionalPiecesToGenerate; i++)
+        for (int i = 0; i < _additionalPiecesToGenerate; i++)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(_spawnDelay);
 
             // Init the random near position as a non valid position to let at least one control
             Vector2 randomNearPosition = _nearPositionNotFound;
