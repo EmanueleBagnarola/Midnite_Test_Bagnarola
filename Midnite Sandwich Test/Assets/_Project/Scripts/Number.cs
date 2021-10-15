@@ -23,7 +23,7 @@ public class Number : Tile, IPointerDownHandler
     }
 
     [SerializeField]
-    private TextMeshPro _numberText = null;
+    private TextMeshPro[] _numberTexts = null;
     [SerializeField]
     private MeshRenderer _meshRenderer = null;
     [SerializeField]
@@ -52,7 +52,8 @@ public class Number : Tile, IPointerDownHandler
     {
         _isMoved = true;
         //HideObject();
-        _numberText.text = string.Empty;
+        _numberTexts[0].text = string.Empty;
+        _numberTexts[1].text = string.Empty;
         iTween.MoveTo(gameObject, destination - new Vector3(0, 0.01f, 0), 0.2f);
         Invoke(nameof(HideObject), 0.25f);
     }
@@ -60,7 +61,8 @@ public class Number : Tile, IPointerDownHandler
     public void SetNumberID(int numberID)
     {
         _numberID = numberID;
-        _numberText.text = numberID.ToString();
+        _numberTexts[0].text = numberID.ToString();
+        _numberTexts[1].text = numberID.ToString();
         _meshRenderer.material = Resources.Load<Material>("MaterialResources/" + GetNumberID + "_M");
     }
 

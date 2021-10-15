@@ -7,7 +7,8 @@ public enum GameMode
 {
     food_random,
     food_template,
-    numbers
+    numbers_simple,
+    numbers_stack
 }
 
 public class GameHandler : MonoBehaviour

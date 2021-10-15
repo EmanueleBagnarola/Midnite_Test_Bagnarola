@@ -304,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917af284d75eb97449c73fe3198a6b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tilesStackOnGrid: []
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,12 +602,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b051e5214b4d944b9bcffa1f7089e42, type: 2}
   - {fileID: 11400000, guid: 70c6d6f463abb1045aaed35a12419066, type: 2}
   - {fileID: 11400000, guid: 577578b13cd426a4a944b9fc8e106db5, type: 2}
-  _additionalPiecesToGenerate: 7
   _numberData: {fileID: 11400000, guid: 559d8f059a68e434eb7d58aa02008018, type: 2}
-  _numbersLevelTemplates:
+  _numbersSimpleLevelTemplates:
   - {fileID: 11400000, guid: 59efc3ffdc32790479e426a3b8131d8c, type: 2}
   - {fileID: 11400000, guid: b2be34671096d7543ac4eecd8a74a825, type: 2}
   - {fileID: 11400000, guid: fd8190e89d996824482e509837ce160f, type: 2}
+  _numbersStackLevelTemplate:
+  - {fileID: 11400000, guid: 3e1d9c3491a06bc408a2e261814800c5, type: 2}
   _instantiateHeight: 0.05
 --- !u!4 &1832414529
 Transform:

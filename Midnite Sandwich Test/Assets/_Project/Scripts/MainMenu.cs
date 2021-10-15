@@ -20,7 +20,10 @@ public class MainMenu : MonoBehaviour
                 GameHandler.Instance.InitGameModeAndLoadScene(0, GameMode.food_template);
                 break;
             case 2:
-                GameHandler.Instance.InitGameModeAndLoadScene(0, GameMode.numbers);
+                GameHandler.Instance.InitGameModeAndLoadScene(0, GameMode.numbers_simple);
+                break;
+            case 3:
+                GameHandler.Instance.InitGameModeAndLoadScene(0, GameMode.numbers_stack);
                 break;
         }
     }

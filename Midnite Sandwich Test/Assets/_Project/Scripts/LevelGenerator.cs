@@ -14,8 +14,11 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private NumberData _numberData = null;
     [SerializeField]
-    private LevelTemplate[] _numbersLevelTemplates = null;
+    private LevelTemplate[] _numbersSimpleLevelTemplates = null;
+    [SerializeField]
+    private LevelTemplate[] _numbersStackLevelTemplate = null;
 
+    [Space]
     [SerializeField]
     private float _instantiateHeight = 0.0f;
 
@@ -71,7 +74,10 @@ public class LevelGenerator : MonoBehaviour
             case GameMode.food_template:
                 StartCoroutine(FoodLevelGenerationFromTemplate());
                 break;
-            case GameMode.numbers:
+            case GameMode.numbers_simple:
+                StartCoroutine(NumberGenerationLevelFromTemplate());
+                break;
+            case GameMode.numbers_stack:
                 StartCoroutine(NumberGenerationLevelFromTemplate());
                 break;
         }
@@ -159,7 +165,14 @@ public class LevelGenerator : MonoBehaviour
     {
         yield return null;
 
-        LevelTemplate randomTemplate = _numbersLevelTemplates[Random.Range(0, _numbersLevelTemplates.Length)];
+        LevelTemplate[] currentLevelTemplateArray = null;
+
+        if (GameHandler.Instance.GetGameMode == GameMode.numbers_simple)
+            currentLevelTemplateArray = _numbersSimpleLevelTemplates;
+        else if (GameHandler.Instance.GetGameMode == GameMode.numbers_stack)
+            currentLevelTemplateArray = _numbersStackLevelTemplate;
+
+        LevelTemplate randomTemplate = currentLevelTemplateArray[Random.Range(0, currentLevelTemplateArray.Length)];
 
         for (int x = 0; x < _gridSize; x++)
         {
@@ -182,7 +195,7 @@ public class LevelGenerator : MonoBehaviour
             return;
 
         Vector2 coords = GetCoordAtTemplatePosition(xTemplatePosition, yTemplatePosition);
-        GameObject number = Instantiate(_numberData.NumberPrefab.gameObject, new Vector3(coords.x, 0f, coords.y), Quaternion.identity);
+        GameObject number = Instantiate(_numberData.NumberPrefab.gameObject, new Vector3(coords.x, _instantiateHeight, coords.y), Quaternion.identity);
         number.transform.localScale = Vector3.zero;
         iTween.ScaleTo(number, Vector3.one, 0.15f);
         Number numberRef = number.GetComponent<Number>();
